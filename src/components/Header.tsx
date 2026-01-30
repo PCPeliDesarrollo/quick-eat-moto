@@ -14,6 +14,7 @@ import {
 import {
   Sheet,
   SheetContent,
+  SheetDescription,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
@@ -64,6 +65,9 @@ const Header = () => {
             <SheetContent className="w-full sm:max-w-md">
               <SheetHeader>
                 <SheetTitle>Tu pedido</SheetTitle>
+                <SheetDescription>
+                  Revisa los productos de tu carrito
+                </SheetDescription>
               </SheetHeader>
               <CartSheet />
             </SheetContent>
