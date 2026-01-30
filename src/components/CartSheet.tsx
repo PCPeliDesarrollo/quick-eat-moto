@@ -85,8 +85,8 @@ const CartSheet = () => {
         </div>
 
         {user ? (
-          <Button variant="hero" size="lg" className="w-full">
-            Finalizar pedido
+          <Button variant="hero" size="lg" className="w-full" asChild>
+            <Link to="/checkout">Finalizar pedido</Link>
           </Button>
         ) : (
           <Button variant="hero" size="lg" className="w-full" asChild>
