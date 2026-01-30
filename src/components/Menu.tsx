@@ -1,5 +1,7 @@
-import { Plus } from "lucide-react";
+import { Plus, Check } from "lucide-react";
 import { Button } from "./ui/button";
+import { useCart } from "@/hooks/useCart";
+import { useToast } from "@/hooks/use-toast";
 
 const products = [
   {
@@ -77,6 +79,24 @@ const products = [
 ];
 
 const Menu = () => {
+  const { addItem, items } = useCart();
+  const { toast } = useToast();
+
+  const handleAddItem = (product: typeof products[0]) => {
+    addItem({
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      image: product.image,
+    });
+    toast({
+      title: "¡Añadido!",
+      description: `${product.name} añadido al carrito`,
+    });
+  };
+
+  const isInCart = (id: number) => items.some(item => item.id === id);
+
   return (
     <section className="py-16 bg-secondary/50">
       <div className="container mx-auto px-4">
@@ -130,8 +150,17 @@ const Menu = () => {
                   <span className="text-lg font-bold text-primary">
                     {product.price.toFixed(2)}€
                   </span>
-                  <Button size="icon" variant="default" className="rounded-full w-9 h-9">
-                    <Plus className="w-4 h-4" />
+                  <Button 
+                    size="icon" 
+                    variant={isInCart(product.id) ? "secondary" : "default"}
+                    className="rounded-full w-9 h-9"
+                    onClick={() => handleAddItem(product)}
+                  >
+                    {isInCart(product.id) ? (
+                      <Check className="w-4 h-4" />
+                    ) : (
+                      <Plus className="w-4 h-4" />
+                    )}
                   </Button>
                 </div>
               </div>

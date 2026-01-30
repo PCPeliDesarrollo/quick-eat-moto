@@ -2,21 +2,36 @@ import { Bike, ShoppingBag, Phone, User, LogOut } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "./ui/button";
 import { useAuth } from "@/hooks/useAuth";
+import { useProfile } from "@/hooks/useProfile";
+import { useCart } from "@/hooks/useCart";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import CartSheet from "./CartSheet";
 
 const Header = () => {
   const { user, signOut, loading } = useAuth();
+  const { profile } = useProfile();
+  const { totalItems } = useCart();
   const navigate = useNavigate();
 
   const handleSignOut = async () => {
     await signOut();
     navigate("/");
   };
+
+  const firstName = profile?.full_name?.split(' ')[0];
 
   return (
     <header className="sticky top-0 z-50 w-full bg-card/80 backdrop-blur-lg border-b border-border">
@@ -37,12 +52,22 @@ const Header = () => {
 
         {/* Actions */}
         <div className="flex items-center gap-3">
-          <Button variant="ghost" size="icon" className="relative">
-            <ShoppingBag className="w-5 h-5" />
-            <span className="absolute -top-1 -right-1 w-5 h-5 rounded-full gradient-primary text-[10px] text-primary-foreground font-bold flex items-center justify-center">
-              0
-            </span>
-          </Button>
+          <Sheet>
+            <SheetTrigger asChild>
+              <Button variant="ghost" size="icon" className="relative">
+                <ShoppingBag className="w-5 h-5" />
+                <span className="absolute -top-1 -right-1 w-5 h-5 rounded-full gradient-primary text-[10px] text-primary-foreground font-bold flex items-center justify-center">
+                  {totalItems}
+                </span>
+              </Button>
+            </SheetTrigger>
+            <SheetContent className="w-full sm:max-w-md">
+              <SheetHeader>
+                <SheetTitle>Tu pedido</SheetTitle>
+              </SheetHeader>
+              <CartSheet />
+            </SheetContent>
+          </Sheet>
 
           {!loading && (
             <>
@@ -51,13 +76,14 @@ const Header = () => {
                   <DropdownMenuTrigger asChild>
                     <Button variant="outline" size="sm" className="gap-2">
                       <User className="w-4 h-4" />
-                      <span className="hidden sm:inline">Mi cuenta</span>
+                      <span className="hidden sm:inline">{firstName || 'Mi cuenta'}</span>
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end" className="w-48">
-                    <DropdownMenuItem className="text-muted-foreground text-sm">
+                    <DropdownMenuItem className="text-muted-foreground text-sm" disabled>
                       {user.email}
                     </DropdownMenuItem>
+                    <DropdownMenuSeparator />
                     <DropdownMenuItem onClick={handleSignOut} className="text-destructive cursor-pointer">
                       <LogOut className="w-4 h-4 mr-2" />
                       Cerrar sesión
