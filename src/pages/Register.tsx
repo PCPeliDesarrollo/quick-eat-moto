@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { Bike, Mail, Lock, User, Phone, MapPin, ArrowRight } from "lucide-react";
+import { Bike, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
 import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
@@ -89,182 +90,160 @@ const Register = () => {
   };
 
   return (
-    <div className="min-h-screen gradient-hero py-8 px-4">
-      <div className="w-full max-w-lg mx-auto">
+    <div className="min-h-screen gradient-hero py-6 px-4">
+      <div className="w-full max-w-md mx-auto">
         {/* Logo */}
-        <Link to="/" className="flex items-center justify-center gap-2 mb-8">
-          <div className="w-12 h-12 rounded-2xl gradient-primary flex items-center justify-center shadow-button">
-            <Bike className="w-6 h-6 text-primary-foreground" />
+        <Link to="/" className="flex items-center justify-center gap-2 mb-6">
+          <div className="w-10 h-10 rounded-xl gradient-primary flex items-center justify-center shadow-button">
+            <Bike className="w-5 h-5 text-primary-foreground" />
           </div>
-          <span className="text-2xl font-bold text-foreground">Tu Sitio</span>
+          <span className="text-xl font-bold text-foreground">Tu Sitio</span>
         </Link>
 
         {/* Form */}
-        <div className="bg-card rounded-3xl shadow-card-hover p-8">
-          <h1 className="text-2xl font-bold text-foreground text-center mb-2">
+        <div className="bg-card rounded-2xl shadow-card-hover p-6">
+          <h1 className="text-xl font-bold text-foreground text-center mb-1">
             Crear cuenta
           </h1>
-          <p className="text-muted-foreground text-center mb-8">
-            Regístrate para guardar tus datos y hacer pedidos más rápido
+          <p className="text-sm text-muted-foreground text-center mb-6">
+            Regístrate para hacer pedidos
           </p>
 
-          <form onSubmit={handleSubmit} className="space-y-5">
-            {/* Account info */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm font-medium text-foreground mb-2">
-                  Email *
-                </label>
-                <div className="relative">
-                  <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
-                  <Input
-                    type="email"
-                    name="email"
-                    placeholder="tu@email.com"
-                    value={formData.email}
-                    onChange={handleChange}
-                    className="pl-12 h-12 rounded-xl"
-                  />
-                </div>
-                {errors.email && <p className="text-sm text-destructive mt-1">{errors.email}</p>}
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-foreground mb-2">
-                  Contraseña *
-                </label>
-                <div className="relative">
-                  <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
-                  <Input
-                    type="password"
-                    name="password"
-                    placeholder="••••••••"
-                    value={formData.password}
-                    onChange={handleChange}
-                    className="pl-12 h-12 rounded-xl"
-                  />
-                </div>
-                {errors.password && <p className="text-sm text-destructive mt-1">{errors.password}</p>}
-              </div>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            {/* Email */}
+            <div className="space-y-1.5">
+              <Label htmlFor="email">Email *</Label>
+              <Input
+                id="email"
+                type="email"
+                name="email"
+                placeholder="tu@email.com"
+                value={formData.email}
+                onChange={handleChange}
+                className="h-11"
+              />
+              {errors.email && <p className="text-xs text-destructive">{errors.email}</p>}
             </div>
 
-            {/* Personal info */}
+            {/* Password */}
+            <div className="space-y-1.5">
+              <Label htmlFor="password">Contraseña *</Label>
+              <Input
+                id="password"
+                type="password"
+                name="password"
+                placeholder="Mínimo 6 caracteres"
+                value={formData.password}
+                onChange={handleChange}
+                className="h-11"
+              />
+              {errors.password && <p className="text-xs text-destructive">{errors.password}</p>}
+            </div>
+
+            {/* Name and Phone */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm font-medium text-foreground mb-2">
-                  Nombre completo *
-                </label>
-                <div className="relative">
-                  <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
-                  <Input
-                    type="text"
-                    name="fullName"
-                    placeholder="Tu nombre"
-                    value={formData.fullName}
-                    onChange={handleChange}
-                    className="pl-12 h-12 rounded-xl"
-                  />
-                </div>
-                {errors.fullName && <p className="text-sm text-destructive mt-1">{errors.fullName}</p>}
+              <div className="space-y-1.5">
+                <Label htmlFor="fullName">Nombre *</Label>
+                <Input
+                  id="fullName"
+                  type="text"
+                  name="fullName"
+                  placeholder="Tu nombre"
+                  value={formData.fullName}
+                  onChange={handleChange}
+                  className="h-11"
+                />
+                {errors.fullName && <p className="text-xs text-destructive">{errors.fullName}</p>}
               </div>
 
-              <div>
-                <label className="block text-sm font-medium text-foreground mb-2">
-                  Teléfono *
-                </label>
-                <div className="relative">
-                  <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
-                  <Input
-                    type="tel"
-                    name="phone"
-                    placeholder="612 345 678"
-                    value={formData.phone}
-                    onChange={handleChange}
-                    className="pl-12 h-12 rounded-xl"
-                  />
-                </div>
-                {errors.phone && <p className="text-sm text-destructive mt-1">{errors.phone}</p>}
+              <div className="space-y-1.5">
+                <Label htmlFor="phone">Teléfono *</Label>
+                <Input
+                  id="phone"
+                  type="tel"
+                  name="phone"
+                  placeholder="612 345 678"
+                  value={formData.phone}
+                  onChange={handleChange}
+                  className="h-11"
+                />
+                {errors.phone && <p className="text-xs text-destructive">{errors.phone}</p>}
               </div>
             </div>
 
             {/* Address */}
-            <div>
-              <label className="block text-sm font-medium text-foreground mb-2">
-                Dirección de entrega *
-              </label>
-              <div className="relative">
-                <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
-                <Input
-                  type="text"
-                  name="address"
-                  placeholder="Calle, número, piso..."
-                  value={formData.address}
-                  onChange={handleChange}
-                  className="pl-12 h-12 rounded-xl"
-                />
-              </div>
-              {errors.address && <p className="text-sm text-destructive mt-1">{errors.address}</p>}
+            <div className="space-y-1.5">
+              <Label htmlFor="address">Dirección *</Label>
+              <Input
+                id="address"
+                type="text"
+                name="address"
+                placeholder="Calle, número, piso..."
+                value={formData.address}
+                onChange={handleChange}
+                className="h-11"
+              />
+              {errors.address && <p className="text-xs text-destructive">{errors.address}</p>}
             </div>
 
+            {/* City and Postal */}
             <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm font-medium text-foreground mb-2">
-                  Ciudad *
-                </label>
+              <div className="space-y-1.5">
+                <Label htmlFor="city">Ciudad *</Label>
                 <Input
+                  id="city"
                   type="text"
                   name="city"
                   placeholder="Ciudad"
                   value={formData.city}
                   onChange={handleChange}
-                  className="h-12 rounded-xl"
+                  className="h-11"
                 />
-                {errors.city && <p className="text-sm text-destructive mt-1">{errors.city}</p>}
+                {errors.city && <p className="text-xs text-destructive">{errors.city}</p>}
               </div>
 
-              <div>
-                <label className="block text-sm font-medium text-foreground mb-2">
-                  Código postal *
-                </label>
+              <div className="space-y-1.5">
+                <Label htmlFor="postalCode">C. Postal *</Label>
                 <Input
+                  id="postalCode"
                   type="text"
                   name="postalCode"
                   placeholder="12345"
                   value={formData.postalCode}
                   onChange={handleChange}
-                  className="h-12 rounded-xl"
+                  className="h-11"
                 />
-                {errors.postalCode && <p className="text-sm text-destructive mt-1">{errors.postalCode}</p>}
+                {errors.postalCode && <p className="text-xs text-destructive">{errors.postalCode}</p>}
               </div>
             </div>
 
-            <div>
-              <label className="block text-sm font-medium text-foreground mb-2">
-                Notas adicionales
-              </label>
+            {/* Notes */}
+            <div className="space-y-1.5">
+              <Label htmlFor="notes">Notas (opcional)</Label>
               <Textarea
+                id="notes"
                 name="notes"
-                placeholder="Ej: Timbre roto, dejar en portería..."
+                placeholder="Ej: Timbre roto, portería..."
                 value={formData.notes}
                 onChange={handleChange}
-                className="rounded-xl resize-none"
-                rows={3}
+                className="resize-none"
+                rows={2}
               />
             </div>
 
             <Button
               type="submit"
               variant="hero"
-              size="xl"
+              size="lg"
               className="w-full"
               disabled={loading}
             >
-              {loading ? "Creando cuenta..." : "Crear cuenta"}
-              <ArrowRight className="w-5 h-5" />
+              {loading ? "Creando..." : "Crear cuenta"}
+              <ArrowRight className="w-4 h-4" />
             </Button>
           </form>
 
-          <p className="text-center text-muted-foreground mt-6">
+          <p className="text-center text-sm text-muted-foreground mt-5">
             ¿Ya tienes cuenta?{" "}
             <Link to="/login" className="text-primary font-semibold hover:underline">
               Inicia sesión
