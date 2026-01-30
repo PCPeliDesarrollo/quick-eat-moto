@@ -1,7 +1,11 @@
 import { Bike, Clock, MapPin } from "lucide-react";
+import { Link } from "react-router-dom";
 import { Button } from "./ui/button";
+import { useAuth } from "@/hooks/useAuth";
 
 const Hero = () => {
+  const { user } = useAuth();
+
   return (
     <section className="gradient-hero py-16 md:py-20">
       <div className="container mx-auto px-4">
@@ -23,10 +27,19 @@ const Hero = () => {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-              <Button variant="hero" size="xl">
-                <Bike className="w-5 h-5" />
-                Pedir a domicilio
-              </Button>
+              {user ? (
+                <Button variant="hero" size="xl">
+                  <Bike className="w-5 h-5" />
+                  Pedir a domicilio
+                </Button>
+              ) : (
+                <Button variant="hero" size="xl" asChild>
+                  <Link to="/registro">
+                    <Bike className="w-5 h-5" />
+                    Pedir a domicilio
+                  </Link>
+                </Button>
+              )}
               <Button variant="outline" size="xl">
                 Recoger en local
               </Button>
