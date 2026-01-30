@@ -1,9 +1,10 @@
-import { Bike, ShoppingBag, Phone, User, LogOut } from "lucide-react";
+import { Bike, ShoppingBag, Phone, User, LogOut, ChefHat } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "./ui/button";
 import { useAuth } from "@/hooks/useAuth";
 import { useProfile } from "@/hooks/useProfile";
 import { useCart } from "@/hooks/useCart";
+import { useUserRole } from "@/hooks/useUserRole";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -25,6 +26,7 @@ const Header = () => {
   const { user, signOut, loading } = useAuth();
   const { profile } = useProfile();
   const { totalItems } = useCart();
+  const { isStaff } = useUserRole();
   const navigate = useNavigate();
 
   const handleSignOut = async () => {
@@ -88,6 +90,15 @@ const Header = () => {
                       {user.email}
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
+                    {isStaff && (
+                      <>
+                        <DropdownMenuItem onClick={() => navigate('/admin')} className="cursor-pointer">
+                          <ChefHat className="w-4 h-4 mr-2" />
+                          Panel de Cocina
+                        </DropdownMenuItem>
+                        <DropdownMenuSeparator />
+                      </>
+                    )}
                     <DropdownMenuItem onClick={handleSignOut} className="text-destructive cursor-pointer">
                       <LogOut className="w-4 h-4 mr-2" />
                       Cerrar sesión
