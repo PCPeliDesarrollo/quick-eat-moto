@@ -1,4 +1,4 @@
-import { Bike, MapPin, ShoppingBag } from "lucide-react";
+import { Bike, ShoppingBag, Phone } from "lucide-react";
 import { Button } from "./ui/button";
 
 const Header = () => {
@@ -10,13 +10,13 @@ const Header = () => {
           <div className="w-10 h-10 rounded-xl gradient-primary flex items-center justify-center shadow-button">
             <Bike className="w-5 h-5 text-primary-foreground" />
           </div>
-          <span className="text-xl font-bold text-foreground">FoodGo</span>
+          <span className="text-xl font-bold text-foreground">Tu Sitio</span>
         </div>
 
-        {/* Location */}
-        <div className="hidden md:flex items-center gap-2 text-muted-foreground hover:text-foreground cursor-pointer transition-colors">
-          <MapPin className="w-4 h-4 text-primary" />
-          <span className="text-sm font-medium">Seleccionar ubicación</span>
+        {/* Contact */}
+        <div className="hidden md:flex items-center gap-2 text-muted-foreground">
+          <Phone className="w-4 h-4 text-primary" />
+          <span className="text-sm font-medium">+34 612 345 678</span>
         </div>
 
         {/* Actions */}
@@ -24,11 +24,11 @@ const Header = () => {
           <Button variant="ghost" size="icon" className="relative">
             <ShoppingBag className="w-5 h-5" />
             <span className="absolute -top-1 -right-1 w-5 h-5 rounded-full gradient-primary text-[10px] text-primary-foreground font-bold flex items-center justify-center">
-              3
+              0
             </span>
           </Button>
           <Button variant="hero" size="sm" className="hidden sm:flex">
-            Iniciar sesión
+            Hacer pedido
           </Button>
         </div>
       </div>
