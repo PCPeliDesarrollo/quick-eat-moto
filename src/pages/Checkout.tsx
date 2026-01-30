@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Loader2, ArrowLeft } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
@@ -20,15 +20,15 @@ const Checkout = () => {
   const { toast } = useToast();
 
   const [formData, setFormData] = useState({
-    name: profile?.full_name || '',
-    phone: profile?.phone || '',
-    address: profile?.address || '',
+    name: '',
+    phone: '',
+    address: '',
     notes: '',
   });
   const [submitting, setSubmitting] = useState(false);
 
   // Update form when profile loads
-  useState(() => {
+  useEffect(() => {
     if (profile) {
       setFormData(prev => ({
         ...prev,
@@ -37,7 +37,7 @@ const Checkout = () => {
         address: profile.address || prev.address,
       }));
     }
-  });
+  }, [profile]);
 
   if (authLoading) {
     return (
