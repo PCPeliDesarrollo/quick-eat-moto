@@ -2,9 +2,13 @@ import { Bike, Clock, MapPin } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "./ui/button";
 import { useAuth } from "@/hooks/useAuth";
+import { useProfile } from "@/hooks/useProfile";
 
 const Hero = () => {
   const { user } = useAuth();
+  const { profile } = useProfile();
+
+  const firstName = profile?.full_name?.split(' ')[0];
 
   return (
     <section className="gradient-hero py-16 md:py-20">
@@ -17,10 +21,20 @@ const Hero = () => {
               <span>Pedidos a domicilio y para llevar</span>
             </div>
             
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-foreground leading-tight mb-6">
-              Bienvenido a{" "}
-              <span className="text-primary">Tu Sitio</span>
-            </h1>
+            {user && firstName ? (
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-foreground leading-tight mb-6">
+                ¡Hola,{" "}
+                <span className="text-primary">{firstName}!</span>
+                <span className="block text-2xl md:text-3xl lg:text-4xl font-bold text-muted-foreground mt-2">
+                  ¿Qué te apetece hoy?
+                </span>
+              </h1>
+            ) : (
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-foreground leading-tight mb-6">
+                Bienvenido a{" "}
+                <span className="text-primary">Tu Sitio</span>
+              </h1>
+            )}
             
             <p className="text-lg text-muted-foreground mb-8 max-w-xl mx-auto lg:mx-0">
               Pizzas artesanales, hamburguesas gourmet, bocadillos, raciones y mucho más. Recógelo o te lo llevamos a casa.
