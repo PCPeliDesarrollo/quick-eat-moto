@@ -1,0 +1,9 @@
+{
+  "appId": "app.lovable.b90f844faf1746728dbc764ed9b8b69f",
+  "appName": "quick-eat-moto",
+  "webDir": "dist",
+  "server": {
+    "url": "https://b90f844f-af17-4672-8dbc-764ed9b8b69f.lovableproject.com?forceHideBadge=true",
+    "cleartext": true
+  }
+}
