@@ -1,20 +1,20 @@
 {
   "android": {
     "icon": {
-      "sources": ["public/icons/icon-512.png"]
+      "sources": ["public/icons/icon.png"]
     },
     "splash": {
-      "sources": ["public/icons/icon-512.png"],
+      "sources": ["public/icons/icon.png"],
       "resizeMode": "contain",
       "backgroundColor": "#8B5CF6"
     }
   },
   "ios": {
     "icon": {
-      "sources": ["public/icons/icon-512.png"]
+      "sources": ["public/icons/icon.png"]
     },
     "splash": {
-      "sources": ["public/icons/icon-512.png"],
+      "sources": ["public/icons/icon.png"],
       "resizeMode": "contain",
       "backgroundColor": "#8B5CF6"
     }
